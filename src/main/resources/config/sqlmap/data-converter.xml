@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lt.data.dao.DataConverterDao">
+
+    <select id="getTableCount" parameterType="java.lang.String" resultType="java.lang.Integer" statementType="STATEMENT">
+        SELECT count(*)
+        FROM  ${tableName}
+    </select>
+
+    <select id="getMinIdNum" parameterType="java.lang.String" resultType="java.lang.Integer" statementType="STATEMENT">
+        SELECT min(${primaryKey})
+        FROM  ${tableName}
+    </select>
+
+    <select id="getTableDataInfo" resultType="java.util.Map" statementType="STATEMENT">
+        SELECT
+        <foreach collection="columnList" item="column" index="index" separator=",">
+            ${column.columnName}
+        </foreach>
+        FROM  ${tableName}
+        WHERE ${primaryKey} >= ${startIndex} AND ${primaryKey} <![CDATA[<]]> ${endIndex}
+    </select>
+
+    <update id="updateTableInfo">
+        update ${tableName}
+        <set>
+            <foreach collection="columnList" item="column" index="index" separator=",">
+                ${column.columnName} = "${column.columnValue}"
+            </foreach>
+        </set>
+        where ${primaryKey} = ${primaryKeyValue}
+    </update>
+</mapper>

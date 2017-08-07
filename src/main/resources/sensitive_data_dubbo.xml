@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://code.alibabatech.com/schema/dubbo
+           http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <dubbo:application name="security-consumer" />
+    <dubbo:registry id="security-data-consumer" address="zookeeper://10.0.4.74:2181" check="false" />
+
+    <dubbo:consumer timeout="200000" check="false"/>
+    <dubbo:protocol name="dubbo"/>
+
+    <dubbo:reference id="sensitiveDataFacade" interface="com.touna.loan.sensitive.facade.intf.SensitiveDataFacade" registry="security-data-consumer" version="1.0.0" />
+</beans>

@@ -1,0 +1,167 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.lt.data</groupId>
+  <artifactId>data-converter</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>data-converter</name>
+  <url>http://maven.apache.org</url>
+
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    <touna-common-service.version>1.0.4</touna-common-service.version>
+    <touna-common-utils.version>1.0.6</touna-common-utils.version>
+
+    <spring3.version>3.2.3.RELEASE</spring3.version>
+    <!-- mybatis -->
+    <mybatis.version>3.2.8</mybatis.version>
+    <!-- mybatis整合spring插件 -->
+    <mybatis.spring.version>1.1.1</mybatis.spring.version>
+
+    <!-- mysql驱动 -->
+    <mysql.version>5.1.35</mysql.version>
+    <!-- slf日志 -->
+    <slf4j.version>1.7.7</slf4j.version>
+    <!-- 阿里巴巴druid数据库连接池 -->
+    <druid.version>1.0.27</druid.version>
+    <!-- 阿里巴巴 Dubbo -->
+    <dubbo.version>2.5.4-SNAPSHOT</dubbo.version>
+    <!-- zookeeper -->
+    <zookeeper.version>3.4.9</zookeeper.version>
+    <!-- zookeeper客户端 -->
+    <zkclient.version>0.1</zkclient.version>
+
+    <c3p0.version>0.9.1.2</c3p0.version>
+
+    <fastjson.version>1.2.4</fastjson.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-beans</artifactId>
+      <version>${spring3.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>${spring3.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-core</artifactId>
+      <version>${spring3.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-tx</artifactId>
+      <version>${spring3.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <scope>test</scope>
+      <version>${spring3.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>1.1.3</version>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-core</artifactId>
+      <version>1.1.3</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.10</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mybatis</groupId>
+      <artifactId>mybatis</artifactId>
+      <version>3.1.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mybatis</groupId>
+      <artifactId>mybatis-spring</artifactId>
+      <version>1.1.1</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-tx</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <!-- mysql -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.30</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.zaxxer</groupId>
+      <artifactId>HikariCP-java7</artifactId>
+      <version>2.4.12</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.touna.loan</groupId>
+      <artifactId>sensitive-facade</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>dubbo</artifactId>
+      <version>2.5.4-SNAPSHOT</version>
+      <exclusions>
+        <exclusion>
+          <groupId>log4j</groupId>
+          <artifactId>log4j</artifactId>
+        </exclusion>
+        <exclusion>
+          <artifactId>spring</artifactId>
+          <groupId>org.springframework</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.zookeeper</groupId>
+      <artifactId>zookeeper</artifactId>
+      <version>${zookeeper.version}</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>slf4j-log4j12</artifactId>
+          <groupId>org.slf4j</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.sgroschupf</groupId>
+      <artifactId>zkclient</artifactId>
+      <version>${zkclient.version}</version>
+    </dependency>
+  </dependencies>
+
+
+</project>

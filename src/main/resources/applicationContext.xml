@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   http://www.springframework.org/schema/beans/spring-beans.xsd
+	   http://www.springframework.org/schema/tx
+	   http://www.springframework.org/schema/tx/spring-tx.xsd
+	   http://www.springframework.org/schema/context
+	   http://www.springframework.org/schema/context/spring-context.xsd
+	   http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"
+	   default-lazy-init="false">
+
+
+	<context:component-scan base-package="com.lt.data" />
+
+	<!--<aop:aspectj-autoproxy proxy-target-class="false" />  -->
+	
+	<context:annotation-config/>
+
+
+	<context:property-placeholder location="classpath:config/jdbc.properties"/><!-- 加载配置文件 -->
+
+	<!-- 配置数据源 -->
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<property name="driverClassName" value="${jdbc.driver}"/>
+		<property name="jdbcUrl" value="${jdbc.url}"/>
+		<property name="username" value="${jdbc.username}"/>
+		<property name="password" value="${jdbc.password}"/>
+		<property name="maximumPoolSize" value="15"/>
+		<property name="maxLifetime" value="700000"/>
+		<property name="idleTimeout" value="600000"/>
+		<property name="connectionTimeout" value="10000"/>
+		<property name="dataSourceProperties">
+			<props>
+				<prop key="dataSourceClassName">com.mysql.jdbc.jdbc2.optional.MysqlDataSource</prop>
+				<prop key="cachePrepStmts">true</prop>
+				<prop key="prepStmtCacheSize">250</prop>
+				<prop key="prepStmtCacheSqlLimit">2048</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg ref="hikariConfig"/>
+	</bean>
+
+	<!-- transaction support -->
+	<!-- PlatformTransactionMnager -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!-- enable transaction annotation support -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<!--<context:annotation-config/> -->
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- 自动扫描sqlmap.xml文件 -->
+		<property name="configLocation" value="classpath:config/mybatis-config.xml" />
+		<property name="mapperLocations" value="classpath*:config/sqlmap/**/*.xml"></property>
+	</bean>
+
+	<!-- DAO接口所在包名，Spring会自动查找其下的类 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.lt.data.dao"></property>
+		 <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+	</bean>
+
+	<import resource="classpath:sensitive_data_dubbo.xml" />
+</beans>
