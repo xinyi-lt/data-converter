@@ -25,7 +25,7 @@ public class App {
         long begin = System.currentTimeMillis();
         for (TableInfo tableInfo : tableList) {
             long beginTime = System.currentTimeMillis();
-            //dataConverterService.dataConverter(tableInfo);
+            dataConverterService.dataConverter(tableInfo);
             long endTime = System.currentTimeMillis();
 
             timeMap.put(tableInfo.getTableName(),(endTime - beginTime)/1000);

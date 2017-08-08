@@ -20,7 +20,7 @@ public interface DataConverterDao {
 
     void updateTableInfo(@Param("tableName") String tableName,
                          @Param("primaryKey") String primaryKey,
-                         @Param("primaryKeyValue") Integer primaryKeyValue,
+                         @Param("primaryKeyValue") Object primaryKeyValue,
                          @Param("columnList") List<ColumnInfo> columnList);
 
     Integer getMinIdNum(@Param("tableName") String tableName, @Param("primaryKey") String primaryKey);

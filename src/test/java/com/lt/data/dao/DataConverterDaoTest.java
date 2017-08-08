@@ -98,11 +98,11 @@ public class DataConverterDaoTest extends BaseTest {
         List<ColumnInfo> columnInfoList = new ArrayList<ColumnInfo>();
         ColumnInfo columnInfo1 = new ColumnInfo();
         columnInfo1.setColumnName("DOCNO");
-        columnInfo1.setColumnValue("DOCNOtest1");
+        columnInfo1.setColumnValue("35058219940310051X1");
 
         ColumnInfo columnInfo2 = new ColumnInfo();
         columnInfo2.setColumnName("MOBILE");
-        columnInfo2.setColumnValue("MOBILEtest1");
+        columnInfo2.setColumnValue("158382502672");
 
         ColumnInfo columnInfo3 = new ColumnInfo();
         columnInfo3.setColumnName("HOME_ADDR");
@@ -110,9 +110,9 @@ public class DataConverterDaoTest extends BaseTest {
 
         columnInfoList.add(columnInfo1);
         columnInfoList.add(columnInfo2);
-        columnInfoList.add(columnInfo3);
+//        columnInfoList.add(columnInfo3);
 
-        dataConverterDao.updateTableInfo("tb_lb_custinfo","ID",1391,columnInfoList);
+        dataConverterDao.updateTableInfo("tb_lb_custinfo","ID",1390,columnInfoList);
     }
 
     @Test

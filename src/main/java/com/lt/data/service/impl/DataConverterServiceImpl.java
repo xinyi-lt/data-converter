@@ -99,7 +99,8 @@ public class DataConverterServiceImpl implements DataConverterService {
 
                         }
                         //更新
-                        Integer primaryKeyValue = (Integer) map.get(primaryKey);
+//                        Integer primaryKeyValue = (Integer) map.get(primaryKey);
+                        Object primaryKeyValue = map.get(primaryKey);
                         dataConverterDao.updateTableInfo(tableName, primaryKey, primaryKeyValue, updateColumnList);
                     }
 
