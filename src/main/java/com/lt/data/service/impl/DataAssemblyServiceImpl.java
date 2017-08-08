@@ -306,6 +306,15 @@ public class DataAssemblyServiceImpl implements DataAssemblyService {
         return  this.dataAssembly("tb_lm_custaccount_new", "ID", columnMap);
     }
 
+    //45 tb_lm_custaccount_his
+    public TableInfo getCustaccountHis(){
+        Map<String, Integer> columnMap = new HashMap<String, Integer>();
+        columnMap.put("BANKNO", SensitiveDataType.BANK_CARD_NUMBER.getCode());
+        columnMap.put("CUSTNO", SensitiveDataType.ID_NUMBER.getCode());
+
+        return  this.dataAssembly("tb_lm_custaccount_his", "ID", columnMap);
+    }
+
     //25 tb_lm_custaccount
     public TableInfo getCustaccount(){
         Map<String, Integer> columnMap = new HashMap<String, Integer>();
@@ -381,7 +390,7 @@ public class DataAssemblyServiceImpl implements DataAssemblyService {
     //33 tb_zx_df
     public TableInfo getDf(){
         Map<String, Integer> columnMap = new HashMap<String, Integer>();
-        columnMap.put("cardNo", SensitiveDataType.CAR_NUMBER.getCode());
+        columnMap.put("cardNo", SensitiveDataType.ID_NUMBER.getCode());
 
         return  this.dataAssembly("tb_zx_df", "ID", columnMap);
     }
