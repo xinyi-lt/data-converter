@@ -83,6 +83,8 @@ public class DataAssemblyServiceImpl implements DataAssemblyService {
         tableList.add(getEmpInfo());
         tableList.add(getCustInfo());
         tableList.add(getSurvey());
+        tableList.add(getCustaccountHis());
+        tableList.add(getZqr());
         return tableList;
     }
 
@@ -517,6 +519,15 @@ public class DataAssemblyServiceImpl implements DataAssemblyService {
         columnMap.put("MOBILE3", SensitiveDataType.PHONE_NUMBER.getCode());
 
         return  this.dataAssembly("tb_lb_custinfo", "ID", columnMap);
+    }
+
+    //46 tb_sys_zqr
+    public TableInfo getZqr(){
+        Map<String, Integer> columnMap = new HashMap<String, Integer>();
+        columnMap.put("TEL", SensitiveDataType.PHONE_NUMBER.getCode());
+        columnMap.put("ADDR", SensitiveDataType.DETAIL_ADDRESS.getCode());
+
+        return  this.dataAssembly("tb_sys_zqr", "ID", columnMap);
     }
 
 }
