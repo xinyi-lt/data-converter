@@ -15,7 +15,7 @@
     </select>
 
     <select id="getTableDataInfo" resultType="java.util.Map" statementType="STATEMENT">
-        SELECT
+        SELECT ${primaryKey},
         <foreach collection="columnList" item="column" index="index" separator=",">
             ${column.columnName}
         </foreach>

@@ -1,14 +1,14 @@
 package com.lt.data;
 
-import com.lt.data.model.ColumnInfo;
 import com.lt.data.model.TableInfo;
+import com.lt.data.service.DataAssemblyService;
 import com.lt.data.service.DataConverterService;
-import com.touna.loan.sensitive.facade.code.SensitiveDataType;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class App {
@@ -16,75 +16,28 @@ public class App {
         ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
 
         DataConverterService dataConverterService = ac.getBean("dataConverterServiceImpl", DataConverterService.class);
+        DataAssemblyService dataAssemblyService = ac.getBean("dataAssemblyServiceImpl", DataAssemblyService.class);
 
-        List<TableInfo> tableList = new ArrayList<TableInfo>();
+        List<TableInfo> tableList = dataAssemblyService.getTableList();
 
-        TableInfo tb1 = new TableInfo();
-        tb1.setTableName("tb_lb_custinfo");
-        tb1.setPrimaryKey("ID");
+        Map<String, Long> timeMap = new HashMap<String, Long>();
 
-        List<ColumnInfo> columnList1 = new ArrayList<ColumnInfo>();
+        long begin = System.currentTimeMillis();
+        for (TableInfo tableInfo : tableList) {
+            long beginTime = System.currentTimeMillis();
+            //dataConverterService.dataConverter(tableInfo);
+            long endTime = System.currentTimeMillis();
 
-        ColumnInfo c2 = new ColumnInfo();
-        c2.setColumnName("DOCNO");
-        c2.setDataType(SensitiveDataType.ID_NUMBER.getCode());
-        columnList1.add(c2);
+            timeMap.put(tableInfo.getTableName(),(endTime - beginTime)/1000);
+        }
+        long end = System.currentTimeMillis();
 
-        ColumnInfo c3 = new ColumnInfo();
-        c3.setColumnName("MOBILE");
-        c3.setDataType(SensitiveDataType.PHONE_NUMBER.getCode());
-        columnList1.add(c3);
+        for (Map.Entry<String, Long> entry: timeMap.entrySet()){
+            System.out.println("程序运行时间： 表" + entry.getKey() + "执行" + entry.getValue() +"秒==="  + entry.getValue()/60 +"分");
+        }
 
-        ColumnInfo c4 = new ColumnInfo();
-        c4.setColumnName("SPOUSETEL");
-        c4.setDataType(SensitiveDataType.PHONE_NUMBER.getCode());
-        columnList1.add(c4);
+        System.out.println("总运行时间： " + (end-begin)/1000 +"秒");
+        System.out.println("总运行时间： " + (end-begin)/(1000*60) +"分");
 
-        ColumnInfo c5 = new ColumnInfo();
-        c5.setColumnName("SPOUSECORPTEL");
-        c5.setDataType(SensitiveDataType.PHONE_NUMBER.getCode());
-        columnList1.add(c5);
-
-        ColumnInfo c6 = new ColumnInfo();
-        c6.setColumnName("SPOUSEDOCNO");
-        c6.setDataType(SensitiveDataType.ID_NUMBER.getCode());
-        columnList1.add(c6);
-
-        ColumnInfo c7 = new ColumnInfo();
-        c7.setColumnName("BANK_PHONE");
-        c7.setDataType(SensitiveDataType.PHONE_NUMBER.getCode());
-        columnList1.add(c7);
-
-        ColumnInfo c8 = new ColumnInfo();
-        c8.setColumnName("ESTATEADDR");
-        c8.setDataType(SensitiveDataType.DETAIL_ADDRESS.getCode());
-        columnList1.add(c8);
-
-        ColumnInfo c9 = new ColumnInfo();
-        c9.setColumnName("HOME_ADDR");
-        c9.setDataType(SensitiveDataType.DETAIL_ADDRESS.getCode());
-        columnList1.add(c9);
-
-        ColumnInfo c10 = new ColumnInfo();
-        c10.setColumnName("HOUSEHOLD");
-        c10.setDataType(SensitiveDataType.DETAIL_ADDRESS.getCode());
-        columnList1.add(c10);
-
-        ColumnInfo c11 = new ColumnInfo();
-        c11.setColumnName("MOBILE2");
-        c11.setDataType(SensitiveDataType.PHONE_NUMBER.getCode());
-        columnList1.add(c11);
-
-        ColumnInfo c12 = new ColumnInfo();
-        c12.setColumnName("MOBILE3");
-        c12.setDataType(SensitiveDataType.PHONE_NUMBER.getCode());
-        columnList1.add(c12);
-
-
-        tb1.setColumnList(columnList1);
-        tableList.add(tb1);
-
-
-        dataConverterService.dataConverter(tableList);
     }
 }

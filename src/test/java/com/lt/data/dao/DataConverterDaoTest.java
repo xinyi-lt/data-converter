@@ -44,9 +44,6 @@ public class DataConverterDaoTest extends BaseTest {
     @Test
     public void testGetTableDataInfo() throws Exception {
         List<ColumnInfo> columnList1 = new ArrayList<ColumnInfo>();
-        ColumnInfo c1 = new ColumnInfo();
-        c1.setColumnName("ID");
-        columnList1.add(c1);
 
         ColumnInfo c2 = new ColumnInfo();
         c2.setColumnName("DOCNO");
