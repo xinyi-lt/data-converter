@@ -52,6 +52,10 @@ public class DataConverterServiceImpl implements DataConverterService {
 
             List<Map<String, Object>> dataList = dataConverterDao.getTableDataInfo(tableName, primaryKey,
                     startIndex, PER_DATA_CONVERTER_SIZE, columnList);
+            LOGGER.info("ID区间 " + dataList.get(0).get(primaryKey) + "----" +
+                    dataList.get(dataList.size()-1).get(primaryKey) + " 共" + dataList.size() + "条");
+
+            int successCount = 0;
 
             for (Map<String, Object> map : dataList) {
                 List<SensitiveDataDTO> sensitiveList = new ArrayList<SensitiveDataDTO>();
@@ -73,7 +77,7 @@ public class DataConverterServiceImpl implements DataConverterService {
                 }
                 //保存
                 if (sensitiveList.size() == 0) {
-                    break;
+                    continue;
                 }
                 LOGGER.info("调用服务，size = "+ sensitiveList.size());
                 Result<Map<String, String>> result = sensitiveDataFacade.saveSensitiveDataBatch(sensitiveList);
@@ -105,11 +109,14 @@ public class DataConverterServiceImpl implements DataConverterService {
                         Object primaryKeyValue = map.get(primaryKey);
                         dataConverterDao.updateTableInfo(tableName, primaryKey, primaryKeyValue, updateColumnList);
                         LOGGER.info("当前更新的Id" + primaryKeyValue);
+                        successCount++;
                     }
 
                 }
 
             }
+
+            LOGGER.info("更新成功" + successCount + "条");
 
         }
     }
