@@ -20,7 +20,8 @@
             ${column.columnName}
         </foreach>
         FROM  ${tableName}
-        WHERE ${primaryKey} >= ${startIndex} AND ${primaryKey} <![CDATA[<]]> ${endIndex}
+        ORDER BY ${primaryKey} ASC
+        limit ${startIndex}, ${perSize}
     </select>
 
     <update id="updateTableInfo">

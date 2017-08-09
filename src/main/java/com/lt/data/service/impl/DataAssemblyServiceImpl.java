@@ -91,7 +91,7 @@ public class DataAssemblyServiceImpl implements DataAssemblyService {
     //1 tb_riskmanage_applyinfo
     public TableInfo getRiskmanageApplyinfo(){
         Map<String, Integer> columnMap = new HashMap<String, Integer>();
-        columnMap.put("DOCNO", SensitiveDataType.ID_NUMBER.getCode());
+        columnMap.put("doc_no", SensitiveDataType.ID_NUMBER.getCode());
         columnMap.put("MOBILE", SensitiveDataType.PHONE_NUMBER.getCode());
         columnMap.put("MOBILE2", SensitiveDataType.PHONE_NUMBER.getCode());
         columnMap.put("MOBILE3", SensitiveDataType.PHONE_NUMBER.getCode());
@@ -150,7 +150,7 @@ public class DataAssemblyServiceImpl implements DataAssemblyService {
     //7 tb_contact
     public TableInfo getContact(){
         Map<String, Integer> columnMap = new HashMap<String, Integer>();
-        columnMap.put("HOUSE_ADDRESS", SensitiveDataType.DETAIL_ADDRESS.getCode());
+        columnMap.put("HOME_ADDRESS", SensitiveDataType.DETAIL_ADDRESS.getCode());
         columnMap.put("PRI_PHONE", SensitiveDataType.PHONE_NUMBER.getCode());
         columnMap.put("SEC_PHONE", SensitiveDataType.PHONE_NUMBER.getCode());
         columnMap.put("HOME_PHONE", SensitiveDataType.PHONE_NUMBER.getCode());

@@ -9,6 +9,8 @@ import com.touna.loan.biz.dubbo.bean.Result;
 import com.touna.loan.sensitive.facade.code.SensitiveDataServiceCode;
 import com.touna.loan.sensitive.facade.dto.SensitiveDataDTO;
 import com.touna.loan.sensitive.facade.intf.SensitiveDataFacade;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +24,9 @@ import java.util.Map;
  */
 @Service
 public class DataConverterServiceImpl implements DataConverterService {
-    private static final int PER_DATA_CONVERTER_SIZE = 100;
+    private static final Logger LOGGER = LoggerFactory.getLogger(DataConverterServiceImpl.class);
+
+    private static final int PER_DATA_CONVERTER_SIZE = 500;
 
     @Autowired
     private DataConverterDao dataConverterDao;
@@ -40,16 +44,14 @@ public class DataConverterServiceImpl implements DataConverterService {
         //1.查询当前表的count
         Integer count = dataConverterDao.getTableCount(tableName);
         int loopNum = (count  +  PER_DATA_CONVERTER_SIZE  - 1) / PER_DATA_CONVERTER_SIZE;
-        //2.查询当前表最小ID值
-        Integer minPrimaryKey = dataConverterDao.getMinIdNum(tableName, primaryKey);
-        //3.查询数据
-        for (int i = 0; i <= loopNum; i++) {
-            int startIndex = minPrimaryKey + i*PER_DATA_CONVERTER_SIZE;
-            int endIndex = startIndex + PER_DATA_CONVERTER_SIZE;
 
+
+        //3.查询数据
+        for (int i = 1; i <= loopNum; i++) {
+            int startIndex =  (i - 1) * PER_DATA_CONVERTER_SIZE;
 
             List<Map<String, Object>> dataList = dataConverterDao.getTableDataInfo(tableName, primaryKey,
-                    startIndex, endIndex, columnList);
+                    startIndex, PER_DATA_CONVERTER_SIZE, columnList);
 
             for (Map<String, Object> map : dataList) {
                 List<SensitiveDataDTO> sensitiveList = new ArrayList<SensitiveDataDTO>();
@@ -73,7 +75,7 @@ public class DataConverterServiceImpl implements DataConverterService {
                 if (sensitiveList.size() == 0) {
                     break;
                 }
-
+                LOGGER.info("调用服务，size = "+ sensitiveList.size());
                 Result<Map<String, String>> result = sensitiveDataFacade.saveSensitiveDataBatch(sensitiveList);
 
                 if (SensitiveDataServiceCode.SYSTEM_NORMAL.getCode() == result.getStatus()){
@@ -102,6 +104,7 @@ public class DataConverterServiceImpl implements DataConverterService {
 //                        Integer primaryKeyValue = (Integer) map.get(primaryKey);
                         Object primaryKeyValue = map.get(primaryKey);
                         dataConverterDao.updateTableInfo(tableName, primaryKey, primaryKeyValue, updateColumnList);
+                        LOGGER.info("当前更新的Id" + primaryKeyValue);
                     }
 
                 }

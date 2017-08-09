@@ -89,7 +89,7 @@ public class DataConverterDaoTest extends BaseTest {
         c12.setColumnName("MOBILE3");
         columnList1.add(c12);
 
-        List result = dataConverterDao.getTableDataInfo("tb_lb_custinfo", "Id",1390,1490, columnList1);
+        List result = dataConverterDao.getTableDataInfo("tb_lb_custinfo", "Id",0,500, columnList1);
         System.out.println(result.size());
     }
 

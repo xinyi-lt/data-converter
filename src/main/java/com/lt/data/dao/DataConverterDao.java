@@ -15,7 +15,7 @@ public interface DataConverterDao {
     List getTableDataInfo(@Param("tableName") String tableName,
                           @Param("primaryKey") String primaryKey,
                           @Param("startIndex") Integer startIndex,
-                          @Param("endIndex") Integer endIndex,
+                          @Param("perSize") Integer perSize,
                           @Param("columnList") List<ColumnInfo> columnList);
 
     void updateTableInfo(@Param("tableName") String tableName,
